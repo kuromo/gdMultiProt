@@ -18,3 +18,9 @@ config/icon="res://icon.svg"
 [autoload]
 
 Server="*res://scenes/singletons/server.gd"
+Gateway="*res://scenes/singletons/gateway.gd"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
