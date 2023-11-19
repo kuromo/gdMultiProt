@@ -52,6 +52,7 @@ func returnLoginReq(result):
 	if(result):
 		print("good login, connect to game server")
 		Server.connectServer()
+		$"../sceneHandler/map/loginScreen".queue_free()
 	else:
 		print("bad login")
 		$"../sceneHandler/map/loginScreen/base/margin/vBox/loginButton".disabled = false

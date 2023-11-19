@@ -36,5 +36,6 @@ func returnLoginReq(result, usrId):
 	print("usr: " + str(usrId) + " login was " + str(result))
 	rpc_id(usrId, "returnLoginReq", result)
 	
+#	TODO fix ugly ass timeout maybe? problem: rpc call gets deleted if client is disconnected before networkframe finishes
 	await get_tree().create_timer(0.1).timeout
 	peer.disconnect_peer(usrId)
