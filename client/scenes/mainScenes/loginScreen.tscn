@@ -44,7 +44,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_nka88")
 
-[node name="NinePatchRect" type="NinePatchRect" parent="."]
+[node name="base" type="NinePatchRect" parent="."]
 custom_minimum_size = Vector2(400, 600)
 layout_mode = 2
 offset_left = 376.0
@@ -55,7 +55,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("NoiseTexture2D_7y1vg")
 
-[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect"]
+[node name="margin" type="MarginContainer" parent="base"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -67,44 +67,44 @@ theme_override_constants/margin_top = 60
 theme_override_constants/margin_right = 35
 theme_override_constants/margin_bottom = 40
 
-[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer"]
+[node name="vBox" type="VBoxContainer" parent="base/margin"]
 custom_minimum_size = Vector2(35, 50)
 layout_mode = 2
 
-[node name="title" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer"]
+[node name="title" type="Label" parent="base/margin/vBox"]
 layout_mode = 2
 text = "Login"
 label_settings = SubResource("LabelSettings_q3jt3")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/MarginContainer/VBoxContainer"]
+[node name="titleMargin" type="MarginContainer" parent="base/margin/vBox"]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 
-[node name="usrNameLabel" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer"]
+[node name="usrNameLabel" type="Label" parent="base/margin/vBox"]
 layout_mode = 2
 text = "Username"
 
-[node name="usrNameEdit" type="TextEdit" parent="NinePatchRect/MarginContainer/VBoxContainer"]
+[node name="usrNameEdit" type="TextEdit" parent="base/margin/vBox"]
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 placeholder_text = "username"
 
-[node name="pwdLabel" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer"]
+[node name="pwdLabel" type="Label" parent="base/margin/vBox"]
 layout_mode = 2
 text = "Password"
 
-[node name="pwdEdit" type="TextEdit" parent="NinePatchRect/MarginContainer/VBoxContainer"]
+[node name="pwdEdit" type="TextEdit" parent="base/margin/vBox"]
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 placeholder_text = "password"
 
-[node name="MarginContainer2" type="MarginContainer" parent="NinePatchRect/MarginContainer/VBoxContainer"]
+[node name="buttonMargin" type="MarginContainer" parent="base/margin/vBox"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="loginButton" type="TextureButton" parent="NinePatchRect/MarginContainer/VBoxContainer"]
+[node name="loginButton" type="TextureButton" parent="base/margin/vBox"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 texture_normal = SubResource("GradientTexture1D_o2hbk")
@@ -113,7 +113,7 @@ texture_disabled = SubResource("GradientTexture1D_5aopw")
 stretch_mode = 0
 flip_h = true
 
-[node name="Label" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer/loginButton"]
+[node name="Label" type="Label" parent="base/margin/vBox/loginButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -129,7 +129,7 @@ grow_vertical = 2
 text = "Login
 "
 
-[node name="createButton" type="TextureButton" parent="NinePatchRect/MarginContainer/VBoxContainer"]
+[node name="createButton" type="TextureButton" parent="base/margin/vBox"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 texture_normal = SubResource("GradientTexture1D_o2hbk")
@@ -138,7 +138,7 @@ texture_disabled = SubResource("GradientTexture1D_5aopw")
 stretch_mode = 0
 flip_h = true
 
-[node name="Label" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer/createButton"]
+[node name="Label" type="Label" parent="base/margin/vBox/createButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -154,5 +154,5 @@ grow_vertical = 2
 text = "Create Account
 "
 
-[connection signal="pressed" from="NinePatchRect/MarginContainer/VBoxContainer/loginButton" to="." method="_on_login_button_pressed"]
-[connection signal="pressed" from="NinePatchRect/MarginContainer/VBoxContainer/createButton" to="." method="_on_create_button_pressed"]
+[connection signal="pressed" from="base/margin/vBox/loginButton" to="." method="_on_login_button_pressed"]
+[connection signal="pressed" from="base/margin/vBox/createButton" to="." method="_on_create_button_pressed"]

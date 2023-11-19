@@ -2,25 +2,31 @@ extends Node
 
 var peer = ENetMultiplayerPeer.new()
 var ip = "127.0.0.1"
-var port = 33333
+var port = 33334
 
 func _ready():
-	pass
-#	connectServer()
+	connectServer()
 	
 	
 func connectServer():
+
 	peer.create_client(ip, port)
 	multiplayer.multiplayer_peer = peer
-
+	
 	multiplayer.connected_to_server.connect(_onConnectionSucceeded)
 	multiplayer.connection_failed.connect(_onConnectionFailed)
 
 
-
 func _onConnectionFailed():
-	print("client cant connect")
+	print("gateway cant connect auth")
 	
 func _onConnectionSucceeded():
-	print("client connected to server")
+	print("gateway connected to auth server")
 	
+@rpc("any_peer")
+func authPlayer(usrName, usrPwd, usrId):
+	rpc_id(1, "authPlayer", usrName, usrPwd, usrId)
+	
+@rpc("any_peer")
+func authResults(result, usrId):
+	Gateway.returnLoginReq(result, usrId)
