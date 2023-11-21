@@ -27,6 +27,7 @@ func _peerConnected(usrId):
 	
 func _peerDisconnected(usrId):
 	print(str(usrId) + " disconnected")
+	get_node(str(usrId)).queue_free()
 
 
 func _on_tokenExpiration_timeout():

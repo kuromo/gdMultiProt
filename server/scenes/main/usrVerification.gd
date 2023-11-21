@@ -2,6 +2,7 @@ extends Node
 
 var awaitingVerification = {}
 @onready var mainInterface = get_parent()
+@onready var usrContainerScene = preload("res://scenes/instances/usrContainer.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,6 +20,7 @@ func verify(usrId, token):
 	while(tokenTimeDif <= 30 && tokenTimeDif > -600):
 		if mainInterface.expectedTokens.has(token):
 			tokenVerification = true
+			createUsrContainer(usrId)
 			print("verification successfull")
 			awaitingVerification.erase(usrId)
 			mainInterface.expectedTokens.erase(token)
@@ -52,5 +54,23 @@ func _on_verification_expiration_timeout():
 	print("users awaiting verification: ")
 	print(awaitingVerification)
 
+
+func createUsrContainer(usrId):
+	var newUsrContainer = usrContainerScene.instantiate()
+	newUsrContainer.name = str(usrId)
+	get_parent().add_child(newUsrContainer, true)
+	var usrContainer = get_node("../" + str(usrId))
+	fillUsrContainer(usrContainer)
+
+
+func fillUsrContainer(usrContainer):
+	var testData = {
+		"Stats:":{
+			"Strenght": 25,
+			"Dexterity": 5,
+			"Intelligence": 40
+		}
+	}
 	
-	
+	usrContainer.usrStats = testData
+
