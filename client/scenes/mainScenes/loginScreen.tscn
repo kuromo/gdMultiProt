@@ -55,56 +55,48 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("NoiseTexture2D_7y1vg")
 
-[node name="margin" type="MarginContainer" parent="base"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 35
-theme_override_constants/margin_top = 60
-theme_override_constants/margin_right = 35
-theme_override_constants/margin_bottom = 40
-
-[node name="vBox" type="VBoxContainer" parent="base/margin"]
+[node name="loginBox" type="VBoxContainer" parent="base"]
 custom_minimum_size = Vector2(35, 50)
 layout_mode = 2
+offset_left = 35.0
+offset_top = 60.0
+offset_right = 365.0
+offset_bottom = 560.0
 
-[node name="title" type="Label" parent="base/margin/vBox"]
+[node name="title" type="Label" parent="base/loginBox"]
 layout_mode = 2
 text = "Login"
 label_settings = SubResource("LabelSettings_q3jt3")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="titleMargin" type="MarginContainer" parent="base/margin/vBox"]
+[node name="titleMargin" type="MarginContainer" parent="base/loginBox"]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 
-[node name="usrNameLabel" type="Label" parent="base/margin/vBox"]
+[node name="mailLabel" type="Label" parent="base/loginBox"]
 layout_mode = 2
-text = "Username"
+text = "Email Address"
 
-[node name="usrNameEdit" type="TextEdit" parent="base/margin/vBox"]
+[node name="mailEdit" type="TextEdit" parent="base/loginBox"]
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
-placeholder_text = "username"
+placeholder_text = "email address"
 
-[node name="pwdLabel" type="Label" parent="base/margin/vBox"]
+[node name="pwdLabel" type="Label" parent="base/loginBox"]
 layout_mode = 2
 text = "Password"
 
-[node name="pwdEdit" type="TextEdit" parent="base/margin/vBox"]
+[node name="pwdEdit" type="TextEdit" parent="base/loginBox"]
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 placeholder_text = "password"
 
-[node name="buttonMargin" type="MarginContainer" parent="base/margin/vBox"]
+[node name="buttonMargin" type="MarginContainer" parent="base/loginBox"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="loginButton" type="TextureButton" parent="base/margin/vBox"]
+[node name="loginButton" type="TextureButton" parent="base/loginBox"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 texture_normal = SubResource("GradientTexture1D_o2hbk")
@@ -113,7 +105,7 @@ texture_disabled = SubResource("GradientTexture1D_5aopw")
 stretch_mode = 0
 flip_h = true
 
-[node name="Label" type="Label" parent="base/margin/vBox/loginButton"]
+[node name="Label" type="Label" parent="base/loginBox/loginButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -129,7 +121,7 @@ grow_vertical = 2
 text = "Login
 "
 
-[node name="createButton" type="TextureButton" parent="base/margin/vBox"]
+[node name="createButton" type="TextureButton" parent="base/loginBox"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 texture_normal = SubResource("GradientTexture1D_o2hbk")
@@ -138,7 +130,7 @@ texture_disabled = SubResource("GradientTexture1D_5aopw")
 stretch_mode = 0
 flip_h = true
 
-[node name="Label" type="Label" parent="base/margin/vBox/createButton"]
+[node name="Label" type="Label" parent="base/loginBox/createButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -154,5 +146,116 @@ grow_vertical = 2
 text = "Create Account
 "
 
-[connection signal="pressed" from="base/margin/vBox/loginButton" to="." method="_on_login_button_pressed"]
-[connection signal="pressed" from="base/margin/vBox/createButton" to="." method="_on_create_button_pressed"]
+[node name="createBox" type="VBoxContainer" parent="base"]
+visible = false
+custom_minimum_size = Vector2(35, 50)
+layout_mode = 2
+offset_left = 35.0
+offset_top = 60.0
+offset_right = 365.0
+offset_bottom = 560.0
+
+[node name="title" type="Label" parent="base/createBox"]
+layout_mode = 2
+text = "Create Account"
+label_settings = SubResource("LabelSettings_q3jt3")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="titleMargin" type="MarginContainer" parent="base/createBox"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="usrNameLabel" type="Label" parent="base/createBox"]
+layout_mode = 2
+text = "Username"
+
+[node name="usrNameEdit" type="TextEdit" parent="base/createBox"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+placeholder_text = "username"
+
+[node name="mailLabel" type="Label" parent="base/createBox"]
+layout_mode = 2
+text = "Email Address"
+
+[node name="mailEdit" type="TextEdit" parent="base/createBox"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+placeholder_text = "emali address"
+
+[node name="pwdLabel" type="Label" parent="base/createBox"]
+layout_mode = 2
+text = "Password"
+
+[node name="pwdEdit" type="TextEdit" parent="base/createBox"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+placeholder_text = "password"
+
+[node name="pwdRepeatELabel" type="Label" parent="base/createBox"]
+layout_mode = 2
+text = "Repeat Password"
+
+[node name="pwdRepeatEdit" type="TextEdit" parent="base/createBox"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+placeholder_text = "password"
+
+[node name="buttonMargin" type="MarginContainer" parent="base/createBox"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="confirmButton" type="TextureButton" parent="base/createBox"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+texture_normal = SubResource("GradientTexture1D_o2hbk")
+texture_pressed = SubResource("GradientTexture1D_3kx3e")
+texture_disabled = SubResource("GradientTexture1D_5aopw")
+stretch_mode = 0
+flip_h = true
+
+[node name="Label" type="Label" parent="base/createBox/confirmButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -21.0
+offset_top = -13.0
+offset_right = 21.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Confirm
+"
+
+[node name="backButton" type="TextureButton" parent="base/createBox"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+texture_normal = SubResource("GradientTexture1D_o2hbk")
+texture_pressed = SubResource("GradientTexture1D_3kx3e")
+texture_disabled = SubResource("GradientTexture1D_5aopw")
+stretch_mode = 0
+flip_h = true
+
+[node name="Label" type="Label" parent="base/createBox/backButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -21.0
+offset_top = -13.0
+offset_right = 21.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Back"
+
+[connection signal="pressed" from="base/loginBox/loginButton" to="." method="_on_login_button_pressed"]
+[connection signal="pressed" from="base/loginBox/createButton" to="." method="_on_create_button_pressed"]
+[connection signal="pressed" from="base/createBox/confirmButton" to="." method="_on_confirm_button_pressed"]
+[connection signal="pressed" from="base/createBox/backButton" to="." method="_on_back_button_pressed"]

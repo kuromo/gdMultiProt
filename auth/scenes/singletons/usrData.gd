@@ -11,4 +11,8 @@ func _ready():
 		users = json_as_dict
 
 
-
+func saveUsrAcc():
+	print("save data to file")
+	var filePath = "res://data/usrData.json"
+	var file = FileAccess.open(filePath,FileAccess.WRITE)
+	file.store_line(JSON.stringify(users, "\t"))

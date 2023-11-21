@@ -24,14 +24,14 @@ func _peerDisconnected(gatewayId):
 	print("gateway " + str(gatewayId) + " disconnected")
 	
 @rpc("any_peer")
-func authPlayer(usrName, usrPwd, usrId):
+func authUser(usrMail, usrPwd, usrId):
 	var gatewayId = multiplayer.get_remote_sender_id()
 	var result
 	var token
-	if(!usrData.users.has(usrName)):
+	if(!usrData.users.has(usrMail)):
 		print ("usr not found")
 		result = false
-	elif(usrData.users[usrName].pwd != usrPwd):
+	elif(usrData.users[usrMail].pwd != usrPwd):
 		print ("wrong pwd")
 		result = false
 	else:
@@ -51,3 +51,32 @@ func authPlayer(usrName, usrPwd, usrId):
 @rpc("any_peer")
 func authResults(result, usrId):
 	pass	
+
+@rpc("any_peer")
+func createAccount(usrMail, usrPwd, usrName, usrId):
+	var gatewayId = multiplayer.get_remote_sender_id()
+	var result
+	var message
+	if(usrData.users.has(usrMail)):
+		result = false
+		message = 2
+	else:
+		var nameTaken = false
+		for key in usrData.users.keys():
+			if usrData.users[key].usrName == usrName:
+				nameTaken = true
+				break
+		if nameTaken == true:
+			result = false
+			message = 3
+		else:
+			result = true
+			message = 4
+			usrData.users[usrMail] = {"usrName": usrName, "pwd": usrPwd}
+			usrData.saveUsrAcc()
+	
+	rpc_id(gatewayId, "createAccountResults", result, usrId, message)
+
+@rpc("any_peer")
+func createAccountResults():
+	pass

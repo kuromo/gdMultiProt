@@ -24,9 +24,18 @@ func _onConnectionSucceeded():
 	print("gateway connected to auth server")
 	
 @rpc("any_peer")
-func authPlayer(usrName, usrPwd, usrId):
-	rpc_id(1, "authPlayer", usrName, usrPwd, usrId)
+func authUser(usrMail, usrPwd, usrId):
+	rpc_id(1, "authUser", usrMail, usrPwd, usrId)
 	
 @rpc("any_peer")
 func authResults(result, usrId, token):
 	Gateway.returnLoginReq(result, usrId, token)
+
+@rpc("any_peer")
+func createAccount(usrMail, usrPwd, usrName, usrId):
+	print("sending create acc request")
+	rpc_id(1, "createAccount", usrMail, usrPwd, usrName, usrId)
+
+@rpc("any_peer")
+func createAccountResults(result, usrId, message):
+	Gateway.returnCreateAcc(result, usrId, message)

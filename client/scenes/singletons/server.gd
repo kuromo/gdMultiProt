@@ -42,4 +42,6 @@ func returnTokenVeriResults(result):
 		print("successful token verification")
 	else:
 		print("token verification failed")
-		$"../sceneHandler/map/loginScreen/base/margin/vBox/loginButton".disabled = false
+		$"../sceneHandler/map/loginScreenn".loginBtn.disabled = false
+		$"../sceneHandler/map/loginScreenn".createBtn.disabled = false
+

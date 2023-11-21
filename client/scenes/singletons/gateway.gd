@@ -5,17 +5,19 @@ var gatewayAPI = SceneMultiplayer.new()
 var ip = "127.0.0.1"
 var port = 33335
 
-var username
-var password
+var usrMail
+var usrName
+var usrPwd
+var newAcc = false
 
-func _ready():
-	pass
-	
-	
-func connectServer(_usrName, _usrPwd):
+
+func connectServer(_usrMail, _usrPwd, _newAcc, _usrName=""):
 	print("gw connectSrv")
-	username = _usrName
-	password = _usrPwd
+	
+	usrMail = _usrMail
+	usrPwd = _usrPwd
+	usrName = _usrName
+	newAcc = _newAcc
 	
 	peer.create_client(ip, port)
 	get_tree().set_multiplayer(gatewayAPI, self.get_path())
@@ -28,24 +30,29 @@ func connectServer(_usrName, _usrPwd):
 
 func _onConnectionFailed():
 	#TODO error
-	print("authSrv connection failed")
-	$"../sceneHandler/map/loginScreen/base/margin/vBox/loginButton".disabled = false
+	print("gw connection failed")
+	$"../sceneHandler/map/loginScreenn".loginBtn.disabled = false
+	$"../sceneHandler/map/loginScreenn".createBtn.disabled = false
+	$"../sceneHandler/map/loginScreen".createConfBtn.disabled = false
+	$"../sceneHandler/map/loginScreen".createBackBtn.disabled = false
+	multiplayer.connected_to_server.disconnect(_onConnectionSucceeded)
+	multiplayer.connection_failed.disconnect(_onConnectionFailed)
 	
 func _onConnectionSucceeded():
-	print("connected to authSrv")
+	print("connected to gw")
 	print(multiplayer.get_unique_id())
-	requestLogin()
-	
-func requestLogin():
-	print("request login from gateway")
-	rpc_id(1, "loginReq", username, password)
-	username = ""
-	password = ""
+	if newAcc == true:
+		requestCreateAcc()
+	else:
+		requestLogin()
 
 @rpc("any_peer")
-func loginReq(usr, pwd):
-	pass
-	
+func requestLogin():
+	print("request login from gateway")
+	rpc_id(1, "requestLogin", usrMail, usrPwd)
+	usrMail = ""
+	usrPwd = ""
+
 @rpc("any_peer")
 func returnLoginReq(result, token):
 	print("ret login")
@@ -56,6 +63,34 @@ func returnLoginReq(result, token):
 		server.connectServer()
 	else:
 		print("bad login")
-		$"../sceneHandler/map/loginScreen/base/margin/vBox/loginButton".disabled = false
+		$"../sceneHandler/map/loginScreenn".loginBtn.disabled = false
+		$"../sceneHandler/map/loginScreenn".createBtn.disabled = false
 	multiplayer.connected_to_server.disconnect(_onConnectionSucceeded)
 	multiplayer.connection_failed.disconnect(_onConnectionFailed)
+
+@rpc("any_peer")
+func requestCreateAcc():
+	print("request account on gw")
+	rpc_id(1, "requestCreateAcc", usrMail, usrPwd, usrName)
+	usrMail = ""
+	usrPwd = ""
+	usrName = ""
+
+@rpc("any_peer")
+func returnCreateAcc(result, message):
+	#messages= 1: failed check, 2: email taken, 3: username taken, 4: success
+	if result == true:
+		print("account created, you can log in now")
+		get_node("../sceneHandler/map/loginScreen")._on_back_button_pressed()
+	else:
+		if message == 1:
+			print("account creation failed, try again")
+		elif message == 2:
+			print("email is taken, use a diffrent one or log in")
+		elif message == 3:
+			print("username is taken")
+		$"../sceneHandler/map/loginScreen".createConfBtn.disabled = false
+		$"../sceneHandler/map/loginScreen".createBackBtn.disabled = false
+	multiplayer.connected_to_server.disconnect(_onConnectionSucceeded)
+	multiplayer.connection_failed.disconnect(_onConnectionFailed)
+		
