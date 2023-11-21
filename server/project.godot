@@ -14,3 +14,7 @@ config/name="gdmServer"
 run/main_scene="res://scenes/main/server.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+controllerCon="*res://scenes/singletons/controllerCon.gd"

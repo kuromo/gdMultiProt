@@ -47,14 +47,15 @@ func loginReq(usr, pwd):
 	pass
 	
 @rpc("any_peer")
-func returnLoginReq(result):
+func returnLoginReq(result, token):
 	print("ret login")
 	if(result):
 		print("good login, connect to game server")
-		Server.connectServer()
-		$"../sceneHandler/map/loginScreen".queue_free()
+		print("token: " + token)
+		server.token = token
+		server.connectServer()
 	else:
 		print("bad login")
 		$"../sceneHandler/map/loginScreen/base/margin/vBox/loginButton".disabled = false
-		multiplayer.connected_to_server.disconnect(_onConnectionSucceeded)
-		multiplayer.connection_failed.disconnect(_onConnectionFailed)
+	multiplayer.connected_to_server.disconnect(_onConnectionSucceeded)
+	multiplayer.connection_failed.disconnect(_onConnectionFailed)

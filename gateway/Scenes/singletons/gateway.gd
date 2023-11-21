@@ -32,9 +32,9 @@ func loginReq(usrName, usrPwd):
 	Authenticate.authPlayer(usrName, usrPwd, usrId)
 
 @rpc("any_peer")
-func returnLoginReq(result, usrId):
+func returnLoginReq(result, usrId, token):
 	print("usr: " + str(usrId) + " login was " + str(result))
-	rpc_id(usrId, "returnLoginReq", result)
+	rpc_id(usrId, "returnLoginReq", result, token)
 	
 #	TODO fix ugly ass timeout maybe? problem: rpc call gets deleted if client is disconnected before networkframe finishes
 	await get_tree().create_timer(0.1).timeout

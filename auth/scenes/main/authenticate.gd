@@ -27,6 +27,7 @@ func _peerDisconnected(gatewayId):
 func authPlayer(usrName, usrPwd, usrId):
 	var gatewayId = multiplayer.get_remote_sender_id()
 	var result
+	var token
 	if(!usrData.users.has(usrName)):
 		print ("usr not found")
 		result = false
@@ -36,8 +37,15 @@ func authPlayer(usrName, usrPwd, usrId):
 	else:
 		print("auth tsuccessful")
 		result = true
+		
+		#randomize random generator, token = hashed random int + unix timestamp int
+		randomize()
+		token = str(randi()).sha256_text() + str(int(Time.get_unix_time_from_system()))
+		var tmpSrvName = "gameSrv1"
+		gameServers.distLoginToken(token, tmpSrvName)
+		
 	print("auth results sent to gw")
-	rpc_id(gatewayId, "authResults", result, usrId)
+	rpc_id(gatewayId, "authResults", result, usrId, token)
 	
 	
 @rpc("any_peer")

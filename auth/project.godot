@@ -18,3 +18,4 @@ config/icon="res://icon.svg"
 [autoload]
 
 usrData="*res://scenes/singletons/usrData.gd"
+gameServers="*res://scenes/singletons/gameServers.gd"

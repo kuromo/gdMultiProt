@@ -28,5 +28,5 @@ func authPlayer(usrName, usrPwd, usrId):
 	rpc_id(1, "authPlayer", usrName, usrPwd, usrId)
 	
 @rpc("any_peer")
-func authResults(result, usrId):
-	Gateway.returnLoginReq(result, usrId)
+func authResults(result, usrId, token):
+	Gateway.returnLoginReq(result, usrId, token)
