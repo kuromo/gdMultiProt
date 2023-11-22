@@ -4,3 +4,19 @@
 
 [node name="sceneHandler" type="Node"]
 script = ExtResource("1_lacs5")
+
+[node name="background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.145098, 0.184314, 0.168627, 1)
+
+[node name="settingsSplitter" type="HSplitContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 400

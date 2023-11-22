@@ -38,10 +38,11 @@ func returnToken():
 @rpc("any_peer")
 func returnTokenVeriResults(result):
 	if(result == true):
-		$"../sceneHandler/map/loginScreen".queue_free()
+#		$"../sceneHandler/map/loginScreen".queue_free()
 		print("successful token verification")
+		$/root/sceneHandler.userVerified()
 	else:
 		print("token verification failed")
-		$"../sceneHandler/map/loginScreenn".loginBtn.disabled = false
-		$"../sceneHandler/map/loginScreenn".createBtn.disabled = false
+		$"../sceneHandler/settingsSplitter/loginScreen".loginBtn.disabled = false
+		$"../sceneHandler/settingsSplitter/loginScreen".createBtn.disabled = false
 

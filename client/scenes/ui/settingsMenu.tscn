@@ -1,0 +1,135 @@
+[gd_scene load_steps=3 format=3 uid="uid://bbdfuhusg3d1t"]
+
+[ext_resource type="Script" path="res://scenes/ui/settingsMenu.gd" id="1_gwmpd"]
+
+[sub_resource type="Theme" id="Theme_f2qd8"]
+
+[node name="settingsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_f2qd8")
+script = ExtResource("1_gwmpd")
+actionItems = Array[String](["moveUp", "moveDown", "moveLeft", "moveRight", "rotateLeft", "rotateRight", "autoAttack"])
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TabContainer" type="TabContainer" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Graphics" type="ScrollContainer" parent="NinePatchRect/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="graphicsGrid" type="GridContainer" parent="NinePatchRect/TabContainer/Graphics"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="NinePatchRect/TabContainer/Graphics/graphicsGrid"]
+layout_mode = 2
+text = "Window Settings"
+
+[node name="emptyCell" type="Control" parent="NinePatchRect/TabContainer/Graphics/graphicsGrid"]
+layout_mode = 2
+
+[node name="windowModeLabel" type="Label" parent="NinePatchRect/TabContainer/Graphics/graphicsGrid"]
+layout_mode = 2
+
+[node name="windowModeSelect" type="OptionButton" parent="NinePatchRect/TabContainer/Graphics/graphicsGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Audio" type="ScrollContainer" parent="NinePatchRect/TabContainer"]
+layout_mode = 2
+
+[node name="audioGrid" type="GridContainer" parent="NinePatchRect/TabContainer/Audio"]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 2
+
+[node name="Label" type="Label" parent="NinePatchRect/TabContainer/Audio/audioGrid"]
+layout_mode = 2
+text = "Volume Settings"
+
+[node name="emptyCell" type="Control" parent="NinePatchRect/TabContainer/Audio/audioGrid"]
+layout_mode = 2
+
+[node name="musicVolLabel" type="Label" parent="NinePatchRect/TabContainer/Audio/audioGrid"]
+layout_mode = 2
+text = "Music Volume"
+
+[node name="musicVolSlider" type="HSlider" parent="NinePatchRect/TabContainer/Audio/audioGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+
+[node name="sfxVolLabel" type="Label" parent="NinePatchRect/TabContainer/Audio/audioGrid"]
+layout_mode = 2
+text = "Effects Volume"
+
+[node name="sfxVolSlider" type="HSlider" parent="NinePatchRect/TabContainer/Audio/audioGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+
+[node name="Input" type="ScrollContainer" parent="NinePatchRect/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="inputGrid" type="GridContainer" parent="NinePatchRect/TabContainer/Input"]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="NinePatchRect/TabContainer/Input/inputGrid"]
+layout_mode = 2
+text = "Key Bindings"
+
+[node name="emptyCell" type="Control" parent="NinePatchRect/TabContainer/Input/inputGrid"]
+layout_mode = 2
+
+[node name="closeButton" type="Button" parent="NinePatchRect"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="NinePatchRect/closeButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -13.0
+offset_right = 20.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Close"
+
+[connection signal="item_selected" from="NinePatchRect/TabContainer/Graphics/graphicsGrid/windowModeSelect" to="." method="_on_window_mode_select_item_selected"]
+[connection signal="value_changed" from="NinePatchRect/TabContainer/Audio/audioGrid/musicVolSlider" to="." method="_on_music_vol_slider_value_changed"]
+[connection signal="value_changed" from="NinePatchRect/TabContainer/Audio/audioGrid/sfxVolSlider" to="." method="_on_sfx_vol_slider_value_changed"]
+[connection signal="pressed" from="NinePatchRect/closeButton" to="." method="_on_close_button_pressed"]

@@ -61,3 +61,7 @@ func _on_confirm_button_pressed():
 		var usrName = createNameInp.text
 		var usrPwd = createPwdInp.text
 		Gateway.connectServer(usrMail, usrPwd, true, usrName)
+
+
+func _on_settings_button_pressed():
+	$/root/sceneHandler.openSettings()

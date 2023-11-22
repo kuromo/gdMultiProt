@@ -31,10 +31,10 @@ func connectServer(_usrMail, _usrPwd, _newAcc, _usrName=""):
 func _onConnectionFailed():
 	#TODO error
 	print("gw connection failed")
-	$"../sceneHandler/map/loginScreenn".loginBtn.disabled = false
-	$"../sceneHandler/map/loginScreenn".createBtn.disabled = false
-	$"../sceneHandler/map/loginScreen".createConfBtn.disabled = false
-	$"../sceneHandler/map/loginScreen".createBackBtn.disabled = false
+	$"../sceneHandler/settingsSplitter/loginScreen".loginBtn.disabled = false
+	$"../sceneHandler/settingsSplitter/loginScreen".createBtn.disabled = false
+	$"../sceneHandler/settingsSplitter/loginScreen".createConfBtn.disabled = false
+	$"../sceneHandler/settingsSplitter/loginScreen".createBackBtn.disabled = false
 	multiplayer.connected_to_server.disconnect(_onConnectionSucceeded)
 	multiplayer.connection_failed.disconnect(_onConnectionFailed)
 	
@@ -63,8 +63,8 @@ func returnLoginReq(result, token):
 		server.connectServer()
 	else:
 		print("bad login")
-		$"../sceneHandler/map/loginScreenn".loginBtn.disabled = false
-		$"../sceneHandler/map/loginScreenn".createBtn.disabled = false
+		$"../sceneHandler/settingsSplitter/loginScreen".loginBtn.disabled = false
+		$"../sceneHandler/settingsSplitter/loginScreen".createBtn.disabled = false
 	multiplayer.connected_to_server.disconnect(_onConnectionSucceeded)
 	multiplayer.connection_failed.disconnect(_onConnectionFailed)
 
@@ -89,8 +89,8 @@ func returnCreateAcc(result, message):
 			print("email is taken, use a diffrent one or log in")
 		elif message == 3:
 			print("username is taken")
-		$"../sceneHandler/map/loginScreen".createConfBtn.disabled = false
-		$"../sceneHandler/map/loginScreen".createBackBtn.disabled = false
+		$"../sceneHandler/settingsSplitter/loginScreen".createConfBtn.disabled = false
+		$"../sceneHandler/settingsSplitter/loginScreen".createBackBtn.disabled = false
 	multiplayer.connected_to_server.disconnect(_onConnectionSucceeded)
 	multiplayer.connection_failed.disconnect(_onConnectionFailed)
 		
