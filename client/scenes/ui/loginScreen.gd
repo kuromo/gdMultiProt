@@ -17,6 +17,12 @@ extends Control
 @onready var createBackBtn = $base/createBox/backButton
 
 func _on_login_button_pressed():
+	# TESTING skip login
+	if($/root/sceneHandler.skipLogin == true):
+		$/root/sceneHandler.userVerified()
+		return
+
+	
 	if(mailInp.text == "" || pwdInp.text == ""):
 		#TODO error
 		print("fill form pls")

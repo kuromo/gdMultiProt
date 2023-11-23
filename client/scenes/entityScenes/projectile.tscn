@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://cl0mof7cgsn7i"]
+
+[ext_resource type="Script" path="res://scenes/entityScenes/projectile.gd" id="1_5snto"]
+[ext_resource type="Texture2D" uid="uid://jya3xn46flib" path="res://assets/tiles/bullets.png" id="1_kt3xf"]
+
+[node name="projectile" type="Area2D"]
+collision_layer = 0
+collision_mask = 4352
+script = ExtResource("1_5snto")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_kt3xf")
+hframes = 2
+vframes = 10
+frame = 4
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-2, -1, -2, 1, 2, 1, 2, -1)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

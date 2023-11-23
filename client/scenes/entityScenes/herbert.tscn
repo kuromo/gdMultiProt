@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://dfbfp1t4pmei2"]
+
+[ext_resource type="Texture2D" uid="uid://dtsr4oirpxxri" path="res://assets/tiles/realmGods.png" id="1_bvt1x"]
+[ext_resource type="Script" path="res://scenes/entityScenes/herbert.gd" id="1_ptl6i"]
+[ext_resource type="PackedScene" uid="uid://bdwgovcxy0414" path="res://scenes/components/hp_bar.tscn" id="3_anp5y"]
+[ext_resource type="Script" path="res://scenes/components/health_component.gd" id="4_il1ci"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w1cje"]
+radius = 7.0
+
+[node name="herbert" type="CharacterBody2D" groups=["billboardRotation", "enemies"]]
+collision_layer = 256
+collision_mask = 4096
+script = ExtResource("1_ptl6i")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_bvt1x")
+hframes = 7
+vframes = 24
+frame = 35
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_w1cje")
+
+[node name="healthComponent" type="Node2D" parent="."]
+script = ExtResource("4_il1ci")
+maxHP = 800
+
+[node name="HPBar" parent="." instance=ExtResource("3_anp5y")]

@@ -32,7 +32,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Graphics" type="ScrollContainer" parent="NinePatchRect/TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="graphicsGrid" type="GridContainer" parent="NinePatchRect/TabContainer/Graphics"]
@@ -53,6 +52,7 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Audio" type="ScrollContainer" parent="NinePatchRect/TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="audioGrid" type="GridContainer" parent="NinePatchRect/TabContainer/Audio"]

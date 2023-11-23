@@ -8,6 +8,8 @@ var settings = preload("res://scenes/ui/settingsMenu.tscn")
 
 var userSettings: UserSettings
 
+#TESTING if true skip login
+var skipLogin = true
 
 func _ready():
 	userSettings = UserSettings.loadOrCreate()
@@ -43,5 +45,6 @@ func closeSettings():
 	settingsSplitter.get_child(0).visible = false
 
 func userVerified():
-#	var mapInstance = map.instantiate()
-	print("user verification on gameserver succeeded, open some other scene")
+	var mapInstance = map.instantiate()
+	$settingsSplitter/loginScreen.queue_free()
+	settingsSplitter.add_child(mapInstance)
