@@ -208,6 +208,7 @@ terrain_set_0/terrain_1/color = Color(0, 0.67451, 0.560784, 1)
 sources/0 = SubResource("TileSetAtlasSource_km35m")
 
 [node name="map" type="Node2D"]
+texture_filter = 1
 script = ExtResource("1_uehku")
 
 [node name="ySortPivot" type="Node2D" parent="."]

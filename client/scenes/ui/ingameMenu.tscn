@@ -1,0 +1,65 @@
+[gd_scene load_steps=2 format=3 uid="uid://bw3r8g5ae2lmp"]
+
+[ext_resource type="Texture2D" uid="uid://baeobv3hbg2t6" path="res://assets/tiles/32pxHelmet.png" id="1_6ja2q"]
+
+[node name="ingameMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="logoutButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = "Logout"
+icon = ExtResource("1_6ja2q")
+icon_alignment = 1
+vertical_icon_alignment = 0
+
+[node name="charSelectButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = "Characters"
+icon = ExtResource("1_6ja2q")
+icon_alignment = 1
+vertical_icon_alignment = 0
+
+[node name="returnButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = "Return"
+icon = ExtResource("1_6ja2q")
+icon_alignment = 1
+vertical_icon_alignment = 0
+
+[node name="settingsButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = "Settings"
+icon = ExtResource("1_6ja2q")
+icon_alignment = 1
+vertical_icon_alignment = 0
+
+[node name="closeButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = "Close Game"
+icon = ExtResource("1_6ja2q")
+icon_alignment = 1
+vertical_icon_alignment = 0

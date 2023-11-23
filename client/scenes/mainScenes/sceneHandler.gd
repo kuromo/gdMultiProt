@@ -3,8 +3,10 @@ extends Node
 var map = preload("res://scenes/mainScenes/map.tscn")
 var loginScene = preload("res://scenes/ui/loginScreen.tscn")
 var settings = preload("res://scenes/ui/settingsMenu.tscn")
+var ingameMenu = preload("res://scenes/ui/ingameMenu.tscn")
 
 @onready var settingsSplitter = $settingsSplitter
+var ingameMenuSplitter
 
 var userSettings: UserSettings
 
@@ -16,8 +18,6 @@ func _ready():
 	
 	exexGraphicSettings()
 
-	
-#	var mapInstance = map.instantiate()
 	var loginInstance = loginScene.instantiate()
 	var settingsInstance = settings.instantiate()
 	settingsSplitter.add_child(settingsInstance)
@@ -31,20 +31,47 @@ func exexGraphicSettings():
 
 
 func openSettings():
-	print("open settings")
-	print(settingsSplitter.collapsed)
 	settingsSplitter.collapsed = false
-	print(settingsSplitter.collapsed)
 	settingsSplitter.get_child(0).visible = true
 	
 func closeSettings():
-	print("close settings")
-	print(settingsSplitter.collapsed)
 	settingsSplitter.collapsed = true
-	print(settingsSplitter.collapsed)
 	settingsSplitter.get_child(0).visible = false
+	
+func openIngameMenu():
+	if ingameMenuSplitter:
+		print("open ign has splitter")
+		ingameMenuSplitter.collapsed = false
+	
+func closeIngameMenu():
+	if ingameMenuSplitter:
+		ingameMenuSplitter.collapsed = true
 
 func userVerified():
 	var mapInstance = map.instantiate()
+	createGameContainer(mapInstance)
+
+func createGameContainer(instance):
+	
+	var mapInstance = map.instantiate()
+	var vpContInstance = SubViewportContainer.new()
+	vpContInstance.stretch = true
+	var vpInstance = SubViewport.new()
+	vpInstance.add_child(mapInstance)
+	vpContInstance.add_child(vpInstance)
 	$settingsSplitter/loginScreen.queue_free()
-	settingsSplitter.add_child(mapInstance)
+
+	
+	
+	var vSplit = VSplitContainer.new()
+	vSplit.split_offset = 80
+	vSplit.collapsed = true
+	vSplit.dragger_visibility = vSplit.DRAGGER_HIDDEN_COLLAPSED
+	vSplit.add_child(ingameMenu.instantiate())
+	vSplit.add_child(vpContInstance)
+	
+	ingameMenuSplitter = vSplit
+	settingsSplitter.add_child(vSplit)
+
+	
+	
