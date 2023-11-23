@@ -1,5 +1,6 @@
 extends Node2D
 
+@onready var ySortPivot = $ySortPivot
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -12,6 +13,9 @@ func _process(delta):
 
 
 func propRot(rot):
+	self.rotation -= rot
+	ySortPivot.rotation += rot
+	
 #	print("Main rota")
 #	print(rot)
 	for node in get_tree().get_nodes_in_group("billboardRotation"):

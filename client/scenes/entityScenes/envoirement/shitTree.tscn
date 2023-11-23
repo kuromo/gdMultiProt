@@ -6,6 +6,8 @@
 radius = 3.16228
 
 [node name="shitTree" type="StaticBody2D" groups=["billboardRotation", "envoirement"]]
+z_index = 1
+y_sort_enabled = true
 collision_layer = 4096
 collision_mask = 0
 
