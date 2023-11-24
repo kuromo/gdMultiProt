@@ -31,6 +31,7 @@ func _on_body_entered(body):
 			body.onHit(projDmg)
 			projHits += 1
 	if(body.is_in_group("envoirement")):
+		body.onHit()
 		get_node("CollisionPolygon2D").set_deferred("disabled", true)
 		self.hide()
 

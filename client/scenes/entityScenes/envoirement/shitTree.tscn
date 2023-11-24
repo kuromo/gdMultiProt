@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://duyxcpiqyxwj8"]
+[gd_scene load_steps=5 format=3 uid="uid://duyxcpiqyxwj8"]
 
+[ext_resource type="Script" path="res://scenes/entityScenes/envoirement/shitTree.gd" id="1_6kmwq"]
 [ext_resource type="Texture2D" uid="uid://cfkqfcuk5yp2x" path="res://assets/tiles/shit16pxTree.png" id="1_8bjqy"]
+[ext_resource type="PackedScene" uid="uid://dudmcrw3gh8ug" path="res://scenes/particles/envoirement_hit.tscn" id="3_pqla6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kd011"]
 radius = 3.16228
@@ -10,6 +12,8 @@ z_index = 1
 y_sort_enabled = true
 collision_layer = 4096
 collision_mask = 0
+script = ExtResource("1_6kmwq")
+hitParticles = ExtResource("3_pqla6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(1, -5)
