@@ -15,10 +15,10 @@ func _process(delta):
 func _unhandled_input(event):
 	if event.is_action_pressed("options"):
 		print("options key pressed")
-		$/root/sceneHandler.openSettings()
+		$/root/sceneHandler.toggleSettings()
 	elif event.is_action_pressed("escape"):
 		print("escape key pressed")
-		$/root/sceneHandler.openIngameMenu()
+		$/root/sceneHandler.toggleIngameMenu()
 
 func propRot(rot):
 	ySortPivot.rotation += rot

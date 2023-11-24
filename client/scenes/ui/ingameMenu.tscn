@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bw3r8g5ae2lmp"]
+[gd_scene load_steps=3 format=3 uid="uid://bw3r8g5ae2lmp"]
 
 [ext_resource type="Texture2D" uid="uid://baeobv3hbg2t6" path="res://assets/tiles/32pxHelmet.png" id="1_6ja2q"]
+[ext_resource type="Script" path="res://scenes/ui/ingameMenu.gd" id="1_nylo7"]
 
 [node name="ingameMenu" type="Control"]
 layout_mode = 3
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_nylo7")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -63,3 +65,7 @@ text = "Close Game"
 icon = ExtResource("1_6ja2q")
 icon_alignment = 1
 vertical_icon_alignment = 0
+
+[connection signal="pressed" from="HBoxContainer/returnButton" to="." method="_on_return_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/settingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/closeButton" to="." method="_on_close_button_pressed"]

@@ -25,6 +25,10 @@ func _ready():
 	closeSettings()
 
 
+func closeApp():
+	get_tree().quit()
+
+
 func exexGraphicSettings():
 	DisplayServer.window_set_min_size(Vector2i(800,600))
 	DisplayServer.window_set_mode(userSettings.windowMode)
@@ -38,14 +42,26 @@ func closeSettings():
 	settingsSplitter.collapsed = true
 	settingsSplitter.get_child(0).visible = false
 	
+func toggleSettings():
+	if settingsSplitter.collapsed:
+		openSettings()
+	else:
+		closeSettings()
+
 func openIngameMenu():
 	if ingameMenuSplitter:
-		print("open ign has splitter")
 		ingameMenuSplitter.collapsed = false
-	
+
 func closeIngameMenu():
 	if ingameMenuSplitter:
 		ingameMenuSplitter.collapsed = true
+
+func toggleIngameMenu():
+	if ingameMenuSplitter:
+		if ingameMenuSplitter.collapsed:
+			openIngameMenu()
+		else:
+			closeIngameMenu()
 
 func userVerified():
 	var mapInstance = map.instantiate()
@@ -53,11 +69,10 @@ func userVerified():
 
 func createGameContainer(instance):
 	
-	var mapInstance = map.instantiate()
 	var vpContInstance = SubViewportContainer.new()
 	vpContInstance.stretch = true
 	var vpInstance = SubViewport.new()
-	vpInstance.add_child(mapInstance)
+	vpInstance.add_child(instance)
 	vpContInstance.add_child(vpInstance)
 	$settingsSplitter/loginScreen.queue_free()
 

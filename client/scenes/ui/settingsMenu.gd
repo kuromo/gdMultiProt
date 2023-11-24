@@ -24,8 +24,6 @@ func populateWindowModes():
 	for key in windowModes:
 		windowModeSelect.add_item(windowModes[key], key)
 	
-	print("window mode from save")
-	print(userSettings.windowMode)
 	var selectedIndex = windowModeSelect.get_item_index(userSettings.windowMode)
 	windowModeSelect.selected = selectedIndex
 	
@@ -55,7 +53,6 @@ func createActionRemapItem() -> void:
 		if userSettings:
 			if userSettings.actionEvents.has(action):
 				var event = userSettings.actionEvents[action]
-				print(action)
 				InputMap.action_erase_events(action)
 				InputMap.action_add_event(action, event)
 			button.actionRemapped.connect(_onActionRemapped)

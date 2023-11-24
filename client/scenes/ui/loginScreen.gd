@@ -71,3 +71,7 @@ func _on_confirm_button_pressed():
 
 func _on_settings_button_pressed():
 	$/root/sceneHandler.openSettings()
+
+
+func _on_close_button_pressed():
+	$/root/sceneHandler.closeApp()
