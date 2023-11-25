@@ -11,7 +11,10 @@ var ingameMenuSplitter
 var userSettings: UserSettings
 
 #TESTING if true skip login
-var skipLogin = true
+var skipLogin = false
+var skipToken = true
+
+var loadedMap
 
 func _ready():
 	userSettings = UserSettings.loadOrCreate()
@@ -88,5 +91,6 @@ func createGameContainer(instance):
 	ingameMenuSplitter = vSplit
 	settingsSplitter.add_child(vSplit)
 
+	loadedMap = instance
 	
 	

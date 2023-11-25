@@ -21,6 +21,9 @@ func _on_login_button_pressed():
 	if($/root/sceneHandler.skipLogin == true):
 		$/root/sceneHandler.userVerified()
 		return
+	elif($/root/sceneHandler.skipToken == true):
+		server.connectServer()
+		return
 
 	
 	if(mailInp.text == "" || pwdInp.text == ""):

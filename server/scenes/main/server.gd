@@ -8,6 +8,9 @@ var expectedTokens = []
 
 @onready var usrVeri = $usrVerification
 
+#TESTING skip token verification
+var skipToken = true
+
 
 func _ready():
 	startServer()
@@ -23,11 +26,17 @@ func startServer():
 
 func _peerConnected(usrId):
 	print(str(usrId) + " connected")
-	usrVeri.start(usrId)
+	#TESTING skip token verification
+	if skipToken:
+		usrVeri.createUsrContainer(usrId)
+		returnTokenVeriResults(usrId, true)
+	else:
+		usrVeri.start(usrId)
 	
 func _peerDisconnected(usrId):
 	print(str(usrId) + " disconnected")
 	get_node(str(usrId)).queue_free()
+	rpc_id(0, "despawnPlayer", usrId)
 
 
 func _on_tokenExpiration_timeout():
@@ -58,5 +67,13 @@ func returnTokenVeriResults(usrId, result):
 	print("server return token result: " + str(result) + " for user: ")
 	print(usrId)
 	rpc_id(usrId, "returnTokenVeriResults", result)
+	if result == true:
+		rpc_id(0, "spawnPlayer", usrId, Vector2(300, 250))
 
-
+@rpc("any_peer")
+func spawnPlayer():
+	pass
+	
+@rpc("any_peer")
+func despawnPlayer():
+	pass

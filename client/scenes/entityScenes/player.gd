@@ -19,6 +19,7 @@ func _unhandled_input(event):
 	if event.is_action_pressed("autoAttack"):
 		aaToggle = !aaToggle
 
+
 func _physics_process(delta):
 	aniLoop()
 	move_and_slide()

@@ -46,3 +46,14 @@ func returnTokenVeriResults(result):
 		$"../sceneHandler/settingsSplitter/loginScreen".loginBtn.disabled = false
 		$"../sceneHandler/settingsSplitter/loginScreen".createBtn.disabled = false
 
+@rpc("any_peer")
+func spawnPlayer(usrId, spawnPos):
+	var loadedMap = $/root/sceneHandler.loadedMap
+	if loadedMap:
+		loadedMap.spawnPlayer(usrId, spawnPos)
+	
+@rpc("any_peer")
+func despawnPlayer(usrId):
+	var loadedMap = $/root/sceneHandler.loadedMap
+	if loadedMap:
+		loadedMap.despawnPlayer(usrId)
