@@ -51,7 +51,8 @@ func determineLatency():
 	rpc_id(1, "determineLatency", Time.get_unix_time_from_system())
 
 @rpc("any_peer")
-func returnLatency(clientTime):
+func returnLatency(serverTime, clientTime):
+#	
 	latencyArray.append((Time.get_unix_time_from_system() - clientTime) / 2)
 	if latencyArray.size() == 9:
 		var totalLatency = 0
@@ -67,6 +68,8 @@ func returnLatency(clientTime):
 		print("new latency " + str(latency) + "  in ms: " + str((latency * 1000)))
 		print("latency delta " + str(deltaLatency) + "  in ms: " + str((deltaLatency * 1000)))
 		latencyArray.clear()
+	# resync to server time
+	clientClock = serverTime + latency
 
 @rpc("any_peer")
 func fetchToken():

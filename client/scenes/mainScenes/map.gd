@@ -64,10 +64,12 @@ func updateWorldState(worldState):
 
 
 func _physics_process(delta):
-	var renderTime = Time.get_unix_time_from_system() - interpolationOffset
+#	var renderTime = Time.get_unix_time_from_system() - interpolationOffset
+	var renderTime = server.clientClock - interpolationOffset
 	if worldStateBuffer.size() > 1:
 		while worldStateBuffer.size() > 2 and renderTime > worldStateBuffer[2]["T"]:
 			worldStateBuffer.remove_at(0)
+			
 		if worldStateBuffer.size() > 2: # we have a future state
 			var interpolationFactor = (renderTime - worldStateBuffer[1]["T"]) / (worldStateBuffer[2]["T"] - worldStateBuffer[1]["T"])
 			for player in worldStateBuffer[2].keys():

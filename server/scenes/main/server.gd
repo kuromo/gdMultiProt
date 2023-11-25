@@ -67,7 +67,7 @@ func returnServerTime():
 @rpc("any_peer")
 func determineLatency(clientTime):
 	var usrId = multiplayer.get_remote_sender_id()
-	rpc_id(usrId, "returnLatency", clientTime)
+	rpc_id(usrId, "returnLatency", Time.get_unix_time_from_system(), clientTime)
 
 @rpc("any_peer")
 func returnLatency():
