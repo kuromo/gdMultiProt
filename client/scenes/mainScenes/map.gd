@@ -6,6 +6,8 @@ extends Node2D
 var playerTemplate = preload("res://scenes/entityScenes/playerTemplate.tscn")
 
 var lastWorldState = 0
+var worldStateBuffer = []
+var interpolationOffset = 0.1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -56,10 +58,24 @@ func despawnPlayer(usrId):
 func updateWorldState(worldState):
 	if worldState["T"] > lastWorldState:
 		lastWorldState = worldState["T"]
-		worldState.erase("T")
-		worldState.erase(multiplayer.get_unique_id())
-		for player in worldState.keys():
+		worldStateBuffer.append(worldState)
+
+
+func _physics_process(delta):
+	var renderTime = Time.get_unix_time_from_system() - interpolationOffset
+	if worldStateBuffer.size() > 1:
+		while worldStateBuffer.size() > 2 and renderTime > worldStateBuffer[1]["T"]:
+			worldStateBuffer.remove_at(0)
+		var interpolationFactor = (renderTime - worldStateBuffer[0]["T"]) / (worldStateBuffer[1]["T"] - worldStateBuffer[0]["T"])
+		for player in worldStateBuffer[1].keys():
+			if str(player) == "T":
+				continue
+			if player == multiplayer.get_unique_id():
+				continue
+			if !worldStateBuffer[0].has(player):
+				continue
 			if %otherPlayers.has_node(str(player)):
-				%otherPlayers.get_node(str(player)).movePlayer(worldState[player]["P"])
+				var newPos = lerp(worldStateBuffer[0][player]["P"], worldStateBuffer[1][player]["P"], interpolationFactor)
+				%otherPlayers.get_node(str(player)).movePlayer(newPos)
 			else:
-				spawnPlayer(player, worldState[player]["P"])
+				spawnPlayer(player, worldStateBuffer[1][player]["P"])
