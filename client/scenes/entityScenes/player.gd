@@ -15,6 +15,8 @@ var acceleration = 1
 var friction = 1
 var attacking = false
 
+var playerState
+
 func _unhandled_input(event):
 	if event.is_action_pressed("autoAttack"):
 		aaToggle = !aaToggle
@@ -23,10 +25,17 @@ func _unhandled_input(event):
 func _physics_process(delta):
 	aniLoop()
 	move_and_slide()
+	definePlayerState()
 
 func _process(delta):
 	skillLoop()
-	
+
+
+func definePlayerState():
+	playerState = {"T":Time.get_unix_time_from_system(), "P":global_position}
+	server.updatePlayerState(playerState)
+
+
 func aniLoop():
 	var direction = Input.get_vector("moveLeft", "moveRight", "moveUp", "moveDown")
 	if direction != Vector2.ZERO:

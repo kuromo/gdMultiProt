@@ -5,6 +5,8 @@ extends Node2D
 
 var playerTemplate = preload("res://scenes/entityScenes/playerTemplate.tscn")
 
+var lastWorldState = 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
@@ -28,7 +30,8 @@ func propRot(rot):
 	
 	for node in get_tree().get_nodes_in_group("billboardRotation"):
 		node.rotation += rot
-	
+
+
 @rpc("any_peer")
 func spawnPlayer(usrId, spawnPos):
 	print("spawn player:")
@@ -37,13 +40,26 @@ func spawnPlayer(usrId, spawnPos):
 		print("is self")
 		pass
 	else:
-		var newPlayer = playerTemplate.instantiate()
-		newPlayer.position = spawnPos
-		newPlayer.name = str(usrId)
-		%otherPlayers.add_child(newPlayer)
+		if !%otherPlayers.has_node(str(usrId)):
+			var newPlayer = playerTemplate.instantiate()
+			newPlayer.position = spawnPos
+			newPlayer.name = str(usrId)
+			%otherPlayers.add_child(newPlayer)
 
 @rpc("any_peer")
 func despawnPlayer(usrId):
 	print("despawn player:")
 	print(usrId)
 	%otherPlayers.get_node(str(usrId)).queue_free()
+
+
+func updateWorldState(worldState):
+	if worldState["T"] > lastWorldState:
+		lastWorldState = worldState["T"]
+		worldState.erase("T")
+		worldState.erase(multiplayer.get_unique_id())
+		for player in worldState.keys():
+			if %otherPlayers.has_node(str(player)):
+				%otherPlayers.get_node(str(player)).movePlayer(worldState[player]["P"])
+			else:
+				spawnPlayer(player, worldState[player]["P"])

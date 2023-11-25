@@ -46,6 +46,16 @@ func returnTokenVeriResults(result):
 		$"../sceneHandler/settingsSplitter/loginScreen".loginBtn.disabled = false
 		$"../sceneHandler/settingsSplitter/loginScreen".createBtn.disabled = false
 
+@rpc("unreliable")
+func updatePlayerState(playerState):
+	rpc_id(1, "updatePlayerState", playerState)
+	
+@rpc("any_peer")
+func updateWorldState(worldState):
+	var loadedMap = $/root/sceneHandler.loadedMap
+	if loadedMap:
+		loadedMap.updateWorldState(worldState)
+
 @rpc("any_peer")
 func spawnPlayer(usrId, spawnPos):
 	var loadedMap = $/root/sceneHandler.loadedMap

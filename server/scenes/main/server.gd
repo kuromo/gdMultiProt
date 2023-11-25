@@ -5,6 +5,7 @@ var port = 33333
 var maxPlyers = 100
 
 var expectedTokens = []
+var playerStateCollection = {}
 
 @onready var usrVeri = $usrVerification
 
@@ -35,8 +36,10 @@ func _peerConnected(usrId):
 	
 func _peerDisconnected(usrId):
 	print(str(usrId) + " disconnected")
-	get_node(str(usrId)).queue_free()
-	rpc_id(0, "despawnPlayer", usrId)
+	if has_node(str(usrId)):
+		get_node(str(usrId)).queue_free()
+		playerStateCollection.erase(usrId)
+		rpc_id(0, "despawnPlayer", usrId)
 
 
 func _on_tokenExpiration_timeout():
@@ -69,6 +72,20 @@ func returnTokenVeriResults(usrId, result):
 	rpc_id(usrId, "returnTokenVeriResults", result)
 	if result == true:
 		rpc_id(0, "spawnPlayer", usrId, Vector2(300, 250))
+
+
+@rpc("any_peer")
+func updatePlayerState(playerState):
+	var usrId = multiplayer.get_remote_sender_id()
+	if playerStateCollection.has(usrId):
+		if playerStateCollection[usrId]["T"] < playerState["T"]:
+			playerStateCollection[usrId] = playerState # update playerstate
+	else:
+		playerStateCollection[usrId] = playerState # add new playerState to the collection
+
+@rpc("unreliable")
+func updateWorldState(worldState):
+	rpc_id(0, "updateWorldState", worldState)
 
 @rpc("any_peer")
 func spawnPlayer():
