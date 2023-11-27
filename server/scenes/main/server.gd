@@ -112,3 +112,8 @@ func spawnPlayer():
 @rpc("any_peer")
 func despawnPlayer():
 	pass
+
+
+@rpc("any_peer")
+func NPCHit(enemyId, dmg):
+	%map.NPCHit(enemyId, dmg)

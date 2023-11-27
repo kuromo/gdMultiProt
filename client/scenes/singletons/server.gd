@@ -113,3 +113,7 @@ func despawnPlayer(usrId):
 	var loadedMap = $/root/sceneHandler.loadedMap
 	if loadedMap:
 		loadedMap.despawnPlayer(usrId)
+
+@rpc("any_peer")
+func NPCHit(enemyId, dmg):
+	rpc_id(1, "NPCHit", enemyId, dmg)

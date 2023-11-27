@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bf6tfsfb5ouvk"]
+[gd_scene load_steps=7 format=3 uid="uid://bf6tfsfb5ouvk"]
 
 [ext_resource type="Texture2D" uid="uid://dpvcpshbsonfj" path="res://assets/tiles/tilesetterTest.png" id="1_gdnjf"]
 [ext_resource type="Script" path="res://scenes/mainScenes/map.gd" id="1_uehku"]
 [ext_resource type="PackedScene" uid="uid://bxu83im8m02ic" path="res://scenes/entityScenes/player.tscn" id="2_giy00"]
-[ext_resource type="PackedScene" uid="uid://dfbfp1t4pmei2" path="res://scenes/entityScenes/herbert.tscn" id="3_diadc"]
 [ext_resource type="PackedScene" uid="uid://duyxcpiqyxwj8" path="res://scenes/entityScenes/envoirement/shitTree.tscn" id="5_txr1x"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_km35m"]
@@ -251,14 +250,9 @@ position = Vector2(181, 90)
 position = Vector2(414, 205)
 
 [node name="enemies" type="Node2D" parent="ySortPivot/ySortPivot2"]
+unique_name_in_owner = true
 z_index = 1
 y_sort_enabled = true
-
-[node name="herbert" parent="ySortPivot/ySortPivot2/enemies" instance=ExtResource("3_diadc")]
-position = Vector2(390, 148)
-
-[node name="herbert2" parent="ySortPivot/ySortPivot2/enemies" instance=ExtResource("3_diadc")]
-position = Vector2(356, 227)
 
 [node name="otherPlayers" type="Node2D" parent="ySortPivot/ySortPivot2"]
 unique_name_in_owner = true

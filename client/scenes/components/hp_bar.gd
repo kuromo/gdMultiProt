@@ -22,12 +22,12 @@ func _ready():
 func _process(delta):
 	pass
 
-func update(percentHP):
-	self.value = percentHP
+func update():
+	self.value = int((float(owner.currentHealth) / owner.maxHealth) * 100)
 	
-	if(percentHP >= 60):
+	if(self.value >= 60):
 		self.set_tint_progress(fullTint)
-	elif(percentHP < 50 && percentHP >= 25):
+	elif(self.value < 50 && self.value >= 25):
 		self.set_tint_progress(halfTint)
-	elif(percentHP < 25):
+	elif(self.value < 25):
 		self.set_tint_progress(lowTint)

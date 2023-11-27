@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bx2klu8jmrybw"]
+[gd_scene load_steps=5 format=3 uid="uid://bx2klu8jmrybw"]
 
 [ext_resource type="Script" path="res://scenes/main/server.gd" id="1_0w82m"]
 [ext_resource type="Script" path="res://scenes/main/usrVerification.gd" id="2_ftx6e"]
 [ext_resource type="Script" path="res://scenes/main/stateProcessing.gd" id="3_e7ca0"]
+[ext_resource type="Script" path="res://scenes/main/map.gd" id="4_vas7m"]
 
 [node name="server" type="Node"]
 script = ExtResource("1_0w82m")
@@ -20,6 +21,10 @@ autostart = true
 
 [node name="stateProcessing" type="Node" parent="."]
 script = ExtResource("3_e7ca0")
+
+[node name="map" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("4_vas7m")
 
 [connection signal="timeout" from="usrVerification/verificationExpiration" to="usrVerification" method="_on_verification_expiration_timeout"]
 [connection signal="timeout" from="tokenExpiration" to="." method="_on_tokenExpiration_timeout"]

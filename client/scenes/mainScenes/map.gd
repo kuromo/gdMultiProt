@@ -4,6 +4,7 @@ extends Node2D
 @onready var ySortPivot2 = $ySortPivot/ySortPivot2
 
 var playerTemplate = preload("res://scenes/entityScenes/playerTemplate.tscn")
+var enemyTemplate = preload("res://scenes/entityScenes/herbert.tscn")
 
 var lastWorldState = 0
 var worldStateBuffer = [] # states: [pastPast, past, future, ..anyFurtherFuture]
@@ -57,6 +58,17 @@ func despawnPlayer(usrId):
 	%otherPlayers.get_node(str(usrId)).queue_free()
 
 
+func spawnNewEnemy(enemyId, enemyDict):
+	var newEnemy = enemyTemplate.instantiate()
+	print(enemyDict)
+	newEnemy.position = enemyDict["location"]
+	newEnemy.maxHealth = enemyDict["maxHealth"]
+	newEnemy.currentHealth = enemyDict["health"]
+	newEnemy.type = enemyDict["type"]
+	newEnemy.state = enemyDict["state"]
+	newEnemy.name = str(enemyId)
+	%enemies.add_child(newEnemy)
+
 func updateWorldState(worldState):
 	if worldState["T"] > lastWorldState:
 		lastWorldState = worldState["T"]
@@ -75,6 +87,8 @@ func _physics_process(delta):
 			for player in worldStateBuffer[2].keys():
 				if str(player) == "T":
 					continue
+				if str(player) == "enemies":
+					continue
 				if player == multiplayer.get_unique_id():
 					continue
 				if !worldStateBuffer[1].has(player):
@@ -84,10 +98,21 @@ func _physics_process(delta):
 					%otherPlayers.get_node(str(player)).movePlayer(newPos)
 				else:
 					spawnPlayer(player, worldStateBuffer[2][player]["P"])
+			for enemy in worldStateBuffer[2]["enemies"].keys():
+				if !worldStateBuffer[1]["enemies"].has(enemy):
+					continue
+				if %enemies.has_node(str(enemy)):
+					var newPos = lerp(worldStateBuffer[1]["enemies"][enemy]["location"], worldStateBuffer[2]["enemies"][enemy]["location"], interpolationFactor)
+					%enemies.get_node(str(enemy)).moveEnemy(newPos)
+					%enemies.get_node(str(enemy)).updateHealth(worldStateBuffer[1]["enemies"][enemy]["health"])
+				else:
+					spawnNewEnemy(enemy, worldStateBuffer[2]["enemies"][enemy])
 		elif renderTime > worldStateBuffer[1]["T"]: # no future state
 			var extrapolationFactor = (renderTime - worldStateBuffer[0]["T"]) / (worldStateBuffer[1]["T"] - worldStateBuffer[0]["T"]) - 1.0
 			for player in worldStateBuffer[1].keys():
 				if str(player) == "T":
+					continue
+				if str(player) == "enemies":
 					continue
 				if player == multiplayer.get_unique_id():
 					continue

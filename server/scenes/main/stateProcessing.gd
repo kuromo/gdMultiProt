@@ -9,5 +9,6 @@ func _physics_process(delta):
 		for player in worldState.keys():
 			worldState[player].erase("T")
 		worldState["T"] = Time.get_unix_time_from_system()
+		worldState["enemies"] = %map.enemyList
 		# logic can go here (verify, anti cheat, chuncking...)
 		get_parent().updateWorldState(worldState)
