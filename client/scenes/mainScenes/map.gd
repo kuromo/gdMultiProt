@@ -51,10 +51,10 @@ func spawnPlayer(usrId, spawnPos):
 
 @rpc("any_peer")
 func despawnPlayer(usrId):
-	print("despawn player:")
-	print(usrId)
+	
 	# TODO maybe add logout timer on server https://youtu.be/XGyrKmOxLcc?si=rOgmwTxE2Ljm3PDm&t=659
-	await get_tree().create_timer(0.2)
+	# TODO change timeout to better solution if possible
+	await get_tree().create_timer(0.2).timeout
 	%otherPlayers.get_node(str(usrId)).queue_free()
 
 
@@ -84,20 +84,21 @@ func _physics_process(delta):
 			
 		if worldStateBuffer.size() > 2: # we have a future state
 			var interpolationFactor = (renderTime - worldStateBuffer[1]["T"]) / (worldStateBuffer[2]["T"] - worldStateBuffer[1]["T"])
-			for player in worldStateBuffer[2].keys():
+			for player in worldStateBuffer[2]["players"].keys():
 				if str(player) == "T":
 					continue
 				if str(player) == "enemies":
 					continue
 				if player == multiplayer.get_unique_id():
 					continue
-				if !worldStateBuffer[1].has(player):
+				if !worldStateBuffer[1]["players"].has(player):
 					continue
 				if %otherPlayers.has_node(str(player)):
-					var newPos = lerp(worldStateBuffer[1][player]["P"], worldStateBuffer[2][player]["P"], interpolationFactor)
+					var newPos = lerp(worldStateBuffer[1]["players"][player]["P"], worldStateBuffer[2]["players"][player]["P"], interpolationFactor)
 					%otherPlayers.get_node(str(player)).movePlayer(newPos)
 				else:
-					spawnPlayer(player, worldStateBuffer[2][player]["P"])
+					print("worldstate spawn player")
+					spawnPlayer(player, worldStateBuffer[2]["players"][player]["P"])
 			for enemy in worldStateBuffer[2]["enemies"].keys():
 				if !worldStateBuffer[1]["enemies"].has(enemy):
 					continue
@@ -109,16 +110,16 @@ func _physics_process(delta):
 					spawnNewEnemy(enemy, worldStateBuffer[2]["enemies"][enemy])
 		elif renderTime > worldStateBuffer[1]["T"]: # no future state
 			var extrapolationFactor = (renderTime - worldStateBuffer[0]["T"]) / (worldStateBuffer[1]["T"] - worldStateBuffer[0]["T"]) - 1.0
-			for player in worldStateBuffer[1].keys():
+			for player in worldStateBuffer[1]["players"].keys():
 				if str(player) == "T":
 					continue
 				if str(player) == "enemies":
 					continue
 				if player == multiplayer.get_unique_id():
 					continue
-				if !worldStateBuffer[0].has(player):
+				if !worldStateBuffer[0]["players"].has(player):
 					continue
 				if %otherPlayers.has_node(str(player)):
-					var posDelta = worldStateBuffer[1][player]["P"] - worldStateBuffer[0][player]["P"]
-					var newPos = worldStateBuffer[1][player]["P"] + (posDelta * extrapolationFactor)
+					var posDelta = worldStateBuffer[1]["players"][player]["P"] - worldStateBuffer[0]["players"][player]["P"]
+					var newPos = worldStateBuffer[1]["players"][player]["P"] + (posDelta * extrapolationFactor)
 					%otherPlayers.get_node(str(player)).movePlayer(newPos)
