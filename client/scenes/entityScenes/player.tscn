@@ -347,9 +347,11 @@ libraries = {
 }
 
 [node name="playerAniTree" type="AnimationTree" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_s4tf0")
+}
 tree_root = SubResource("AnimationNodeStateMachine_nudse")
 anim_player = NodePath("../AnimationPlayer")
-active = true
 parameters/Attack/blend_position = Vector2(-0.4704, 0.475983)
 parameters/Idle/blend_position = Vector2(0.0304, -0.196507)
 parameters/Walk/blend_position = Vector2(0, 0)
