@@ -113,6 +113,15 @@ func spawnPlayer():
 func despawnPlayer():
 	pass
 
+@rpc("any_peer")
+func sendAttack(position, animationVector, spawnTime):
+	var usrId = multiplayer.get_remote_sender_id()
+	rpc_id(0, "recieveAttack", position, animationVector, spawnTime, usrId)
+
+@rpc("any_peer")
+func recieveAttack():
+	pass
+		
 
 @rpc("any_peer")
 func NPCHit(enemyId, dmg):

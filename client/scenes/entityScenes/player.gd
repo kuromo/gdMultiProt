@@ -16,6 +16,7 @@ var friction = 1
 var attacking = false
 
 var playerState
+var animationVector = Vector2()
 
 func _unhandled_input(event):
 	if event.is_action_pressed("autoAttack"):
@@ -32,7 +33,7 @@ func _process(delta):
 
 
 func definePlayerState():
-	playerState = {"T":Time.get_unix_time_from_system(), "P":global_position}
+	playerState = {"T":server.clientClock, "P": global_position, "A": animationVector}
 	server.updatePlayerState(playerState)
 
 
@@ -42,9 +43,11 @@ func aniLoop():
 		velocity = direction * speed
 		velocity = velocity.rotated(rotation)
 		#velocity = velocity.lerp(direction * speed, acceleration)
+		# TODO? add  acceleration
+		animationVector = direction
 		aniTree.set("parameters/Walk/blend_position", direction)
 		aniTree.set("parameters/Idle/blend_position", direction)
-		#if aniMode.get_current_node() != "Attack":
+		#if aniMode.get_current_nodPe() != "Attack":
 		aniMode.travel("Walk")
 	else:
 		velocity = velocity.lerp(Vector2.ZERO, friction)
@@ -69,14 +72,16 @@ func skillLoop():
 
 
 func _startAtt():
-	aniTree.set("parameters/Attack/blend_position", position.direction_to(get_global_mouse_position()).normalized())
-	aniTree.set("parameters/Idle/blend_position", position.direction_to(get_global_mouse_position()).normalized())
+	animationVector = position.direction_to(get_global_mouse_position()).normalized()
+	aniTree.set("parameters/Attack/blend_position", animationVector)
+	aniTree.set("parameters/Idle/blend_position", animationVector)
 	aniMode.travel("Attack")
 	
 	#@TODO add delta calc like: https://ask.godotengine.org/115442/increasing-weapon-firerate-beyond-framerate-limit
 	if canFire == true:
-		var fireAngle = get_angle_to(get_global_mouse_position())
+		server.sendAttack(position, animationVector)
 		
+		var fireAngle = get_angle_to(get_global_mouse_position())
 		canFire = false
 		get_node("projAxis").rotation = fireAngle
 		var projInst = proj.instantiate()

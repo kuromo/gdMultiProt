@@ -7,6 +7,8 @@ var projHits = 0
 
 var projDmg = 60
 
+var original = true
+
 func _physics_process(delta):
 	position += transform.x * projSpeed * delta
 	_selfDestruct()
@@ -23,13 +25,15 @@ func _on_body_entered(body):
 		#last pierce hit, disable collison
 		if(projHits == projPierce):
 #			print("i hit a " +body.name + " was last pierce")
-			body.onHit(projDmg)
 			get_node("CollisionPolygon2D").set_deferred("disabled", true)
 			self.hide()
+			if original:
+				body.onHit(projDmg)
 		elif(projHits < projPierce):
 #			print("i hit a " +body.name)
-			body.onHit(projDmg)
 			projHits += 1
+			if original:
+				body.onHit(projDmg)
 	if(body.is_in_group("envoirement")):
 		body.onHit()
 		get_node("CollisionPolygon2D").set_deferred("disabled", true)

@@ -115,5 +115,21 @@ func despawnPlayer(usrId):
 		loadedMap.despawnPlayer(usrId)
 
 @rpc("any_peer")
+func sendAttack(position, animationVector):
+	var loadedMap = $/root/sceneHandler.loadedMap
+	print(loadedMap.get_node("ySortPivot/ySortPivot2/otherPlayers"))
+	rpc_id(1, "sendAttack", position, animationVector, clientClock)
+
+@rpc("any_peer")
+func recieveAttack(position, animationVector, spawnTime, usrId):
+	if usrId == multiplayer.get_unique_id():
+		pass
+	else:
+		var loadedMap = $/root/sceneHandler.loadedMap
+		var otherPlayer = loadedMap.get_node("ySortPivot/ySortPivot2/otherPlayers/" + str(usrId))
+		otherPlayer.attackDict[spawnTime] = {"position" = position, "animationVector" = animationVector}
+		
+
+@rpc("any_peer")
 func NPCHit(enemyId, dmg):
 	rpc_id(1, "NPCHit", enemyId, dmg)

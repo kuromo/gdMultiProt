@@ -96,7 +96,8 @@ func _physics_process(delta):
 					continue
 				if %otherPlayers.has_node(str(player)):
 					var newPos = lerp(worldStateBuffer[1]["players"][player]["P"], worldStateBuffer[2]["players"][player]["P"], interpolationFactor)
-					%otherPlayers.get_node(str(player)).movePlayer(newPos)
+					var animationVector = worldStateBuffer[2]["players"][player]["A"]
+					%otherPlayers.get_node(str(player)).movePlayer(newPos, animationVector)
 				else:
 					print("worldstate spawn player")
 					spawnPlayer(player, worldStateBuffer[2]["players"][player]["P"])
@@ -123,4 +124,5 @@ func _physics_process(delta):
 				if %otherPlayers.has_node(str(player)):
 					var posDelta = worldStateBuffer[1]["players"][player]["P"] - worldStateBuffer[0]["players"][player]["P"]
 					var newPos = worldStateBuffer[1]["players"][player]["P"] + (posDelta * extrapolationFactor)
-					%otherPlayers.get_node(str(player)).movePlayer(newPos)
+					var animationVector = worldStateBuffer[1]["players"][player]["A"]
+					%otherPlayers.get_node(str(player)).movePlayer(newPos, animationVector)
