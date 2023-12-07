@@ -62,6 +62,7 @@ func spawnNewEnemy(enemyId, enemyDict):
 	var newEnemy = enemyTemplate.instantiate()
 	print(enemyDict)
 	newEnemy.position = enemyDict["location"]
+	newEnemy.rotation = %player.rotation
 	newEnemy.maxHealth = enemyDict["maxHealth"]
 	newEnemy.currentHealth = enemyDict["health"]
 	newEnemy.type = enemyDict["type"]
